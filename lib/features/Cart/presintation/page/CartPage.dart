@@ -104,9 +104,7 @@ class _CartPageState extends State<CartPage> {
           builder: (context, state) {
             if (state is CartInitial) {
               BlocProvider.of<Cart_bloc>(context).add(Cart());
-              return Center(
-                child: Lottie.asset('assets/json/loading.json'),
-              );
+
             }
 
             if (state is CartLoading) {
@@ -121,8 +119,7 @@ class _CartPageState extends State<CartPage> {
             if (state is SendOrderILoaded) {
                cachedData(key: 'Cart', data: []);
                cachedData(key: 'phoneNumber', data:_phoneController.text);
-               
-
+               BlocProvider.of<Cart_bloc>(context).add(Cart());
 
             }
             if (state is CartILoaded) {
