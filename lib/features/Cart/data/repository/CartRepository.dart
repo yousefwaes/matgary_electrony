@@ -38,6 +38,7 @@ class CartRepository extends Repository {
     return await sendRequest(
       checkConnection: networkInfo.isConnected,
       remoteFunction: () async {
+
         List<ProductModel> remoteData = await remoteDataProvider.sendJsonData(
           url: DataSourceURL.sendOrder,
           jsonData:{
@@ -54,6 +55,7 @@ class CartRepository extends Repository {
           returnType: List,
           retrievedDataType: ProductModel.init(),
         );
+        print(remoteData);
         return remoteData;
       },
       getCacheDataFunction: () async {},

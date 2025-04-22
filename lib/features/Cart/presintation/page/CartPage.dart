@@ -390,260 +390,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                elevation: 8,
-                                                insetPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 24),
-                                                child: Container(
-                                                  width: double.maxFinite,
-                                                  constraints: BoxConstraints(
-                                                      maxWidth: 500),
-                                                  padding: EdgeInsets.all(20),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                        width: double.infinity,
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 15),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: primaryColor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        child: Center(
-                                                          child: Text(
-                                                            "تأكيد الطلب",
-                                                            style: TextStyle(
-                                                              fontSize: 22,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 24),
-                                                      InputField(
-                                                        controller:
-                                                            _nameController,
-                                                        labelText: "اسم العميل",
-                                                        prefixIcon:
-                                                            Icons.person,
-                                                      ),
-                                                      SizedBox(height: 16),
-                                                      InputField(
-                                                        controller:
-                                                            _phoneController,
-                                                        labelText: "رقم الهاتف",
-                                                        prefixIcon: Icons.phone,
-                                                        keyboardType:
-                                                            TextInputType.phone,
-                                                      ),
-                                                      SizedBox(height: 16),
-                                                      InputField(
-                                                        controller:
-                                                            _addressController,
-                                                        labelText: "العنوان",
-                                                        prefixIcon:
-                                                            Icons.location_on,
-                                                        maxLines: 3,
-                                                      ),
-                                                      SizedBox(height: 24),
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.all(16),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Colors.grey[100],
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
-                                                          border: Border.all(
-                                                              color: Colors
-                                                                  .grey[300]!),
-                                                        ),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              "تفاصيل الطلب",
-                                                              style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
-                                                            Divider(
-                                                                thickness: 1.5),
-                                                            SizedBox(height: 8),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  "${calculateTotal(state.productModel).toStringAsFixed(2)} ريال",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color:
-                                                                        primaryColor,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "المجموع:",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 24),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          Expanded(
-                                                            child: TextButton(
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                              style: TextButton
-                                                                  .styleFrom(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            12),
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  side: BorderSide(
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          400]!),
-                                                                ),
-                                                              ),
-                                                              child: Text(
-                                                                "إلغاء",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 16,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      800],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(width: 16),
-                                                          Expanded(
-                                                            child:
-                                                                ElevatedButton(
-                                                              onPressed: () {
-                                                                // Process order here
-                                                                if (_nameController.text.isEmpty ||
-                                                                    _addressController
-                                                                        .text
-                                                                        .isEmpty ||
-                                                                    _phoneController
-                                                                        .text
-                                                                        .isEmpty) {
-                                                                  ScaffoldMessenger.of(
-                                                                          context)
-                                                                      .showSnackBar(
-                                                                    SnackBar(
-                                                                        content:
-                                                                            Text("الرجاء إدخال جميع البيانات المطلوبة")),
-                                                                  );
-                                                                  return;
-                                                                }
-
-                                                                BlocProvider.of<Cart_bloc>(context).add(SendOrder());
-                                                                // Here you'd typically send the order to your backend
-
-
-                                                              },
-                                                              style:
-                                                                  ElevatedButton
-                                                                      .styleFrom(
-                                                                backgroundColor:
-                                                                    primaryColor,
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            12),
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                              ),
-                                                              child: Text(
-                                                                "تأكيد الطلب",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
+                                        _showCheckoutConfirmation(context, calculateTotal(state.productModel));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: primaryColor,
@@ -678,10 +425,13 @@ class _CartPageState extends State<CartPage> {
 
   // Show checkout confirmation dialog
   void _showCheckoutConfirmation(BuildContext context, double total) {
+    // Store the parent context that has access to the BlocProvider
+    final parentContext = context;
+    
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Dialog(
@@ -785,7 +535,7 @@ class _CartPageState extends State<CartPage> {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(dialogContext).pop();
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 12),
@@ -811,20 +561,24 @@ class _CartPageState extends State<CartPage> {
                             if (_nameController.text.isEmpty ||
                                 _addressController.text.isEmpty ||
                                 _phoneController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              ScaffoldMessenger.of(dialogContext).showSnackBar(
                                 SnackBar(
                                     content: Text(
                                         "الرجاء إدخال جميع البيانات المطلوبة")),
                               );
                               return;
-                            }
+                            }else {
+                              print("fffffff");
+                              // Use parentContext to access the BlocProvider
+                              BlocProvider.of<Cart_bloc>(parentContext).add(
+                                  SendOrder());
 
-                            // Here you'd typically send the order to your backend
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("تم تأكيد الطلب بنجاح")),
-                            );
-                            Navigator.of(context).pop();
-                          },
+                              // Here you'd typically send the order to your backend
+                              ScaffoldMessenger.of(dialogContext).showSnackBar(
+                                SnackBar(content: Text("تم تأكيد الطلب بنجاح")),
+                              );
+                              Navigator.of(dialogContext).pop();
+                            }},
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             padding: EdgeInsets.symmetric(vertical: 12),
