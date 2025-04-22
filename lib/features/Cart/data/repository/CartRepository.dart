@@ -35,23 +35,25 @@ class CartRepository extends Repository {
   }
 
 
-  Future<Either<Failure, dynamic>> sendOrder() async {
+  Future<Either<Failure, dynamic>> sendOrder({
+    required String customerName,
+    required String customerAddress,
+    required String customerPhone,
+    required double total,
+    required List<Map<String, dynamic>> items,
+  }) async {
     return await sendRequest(
       checkConnection: networkInfo.isConnected,
-      remoteFunction: () async {;
+      remoteFunction: () async {
         SendOrderModel remoteData = await remoteDataProvider.sendJsonData(
           url: DataSourceURL.sendOrder,
           jsonData:{
-            "customerName":    "أحمد علي",
-            "customerAddress": "شارع التحلية، جدة",
-            "customerPhone":   "0512345678",
-            "total":           350.00,
-            "items": [
-              { "productId": 1, "quantity": 2, "price": 120.00 },
-              { "productId": 2, "quantity": 1, "price": 110.00}
-            ]
-
-          } ,
+            "customerName": customerName,
+            "customerAddress": customerAddress,
+            "customerPhone": customerPhone,
+            "total": total,
+            "items": items
+          },
           returnType: SendOrderModel.init(),
           retrievedDataType: SendOrderModel.init(),
         );

@@ -121,11 +121,7 @@ class _CartPageState extends State<CartPage> {
             if (state is SendOrderILoaded) {
                cachedData(key: 'Cart', data: []);
                cachedData(key: 'phoneNumber', data:_phoneController.text);
-               Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                     builder: (context) => HomePage(),
-                   ));
+               
 
 
             }
@@ -401,7 +397,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
-                                        _showCheckoutConfirmation(context, calculateTotal(state.productModel));
+                                        _showCheckoutConfirmation(context, calculateTotal(state.productModel), state.productModel);
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: primaryColor,
@@ -435,7 +431,7 @@ class _CartPageState extends State<CartPage> {
   }
 
   // Show checkout confirmation dialog
-  void _showCheckoutConfirmation(BuildContext context, double total) {
+  void _showCheckoutConfirmation(BuildContext context, double total, List<ProductModel> products) {
     // Store the parent context that has access to the BlocProvider
     final parentContext = context;
     
@@ -578,18 +574,38 @@ class _CartPageState extends State<CartPage> {
                                         "الرجاء إدخال جميع البيانات المطلوبة")),
                               );
                               return;
-                            }else {
+                            }
+                            
+                            // Prepare order items
+                            List<Map<String, dynamic>> orderItems = [];
+                            for (var product in products) {
+                              int quantity = quantities[product.id ?? 0] ?? 1;
+                              double price = double.tryParse(product.price.toString()) ?? 0.0;
+                              
+                              orderItems.add({
+                                "productId": product.id,
+                                "quantity": quantity,
+                                "price": price,
+                              });
+                            }
 
-                              // Use parentContext to access the BlocProvider
-                              BlocProvider.of<Cart_bloc>(parentContext).add(
-                                  SendOrder());
-
-                              // Here you'd typically send the order to your backend
-                              ScaffoldMessenger.of(dialogContext).showSnackBar(
-                                SnackBar(content: Text("تم تأكيد الطلب بنجاح")),
-                              );
-                              Navigator.of(dialogContext).pop();
-                            }},
+                            // Use parentContext to access the BlocProvider
+                            BlocProvider.of<Cart_bloc>(parentContext).add(
+                              SendOrder(
+                                customerName: _nameController.text,
+                                customerAddress: _addressController.text,
+                                customerPhone: _phoneController.text,
+                                total: calculateTotal(products),
+                                items: orderItems,
+                              )
+                            );
+                            
+                            // Here you'd typically send the order to your backend
+                            ScaffoldMessenger.of(dialogContext).showSnackBar(
+                              SnackBar(content: Text("تم تأكيد الطلب بنجاح")),
+                            );
+                            Navigator.of(dialogContext).pop();
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             padding: EdgeInsets.symmetric(vertical: 12),

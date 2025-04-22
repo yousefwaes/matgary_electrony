@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -38,7 +37,13 @@ class Cart_bloc
 
     if (event is SendOrder) {
       yield SendOrderLoading();
-      final failureOrData = await repository.sendOrder();
+      final failureOrData = await repository.sendOrder(
+        customerName: event.customerName,
+        customerAddress: event.customerAddress,
+        customerPhone: event.customerPhone,
+        total: event.total,
+        items: event.items,
+      );
 
       yield* failureOrData.fold(
             (failure) async* {
