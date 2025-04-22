@@ -11,6 +11,13 @@ class Cart extends CartEvent {
 
   const Cart();
 }
+class SendOrder extends CartEvent {
+
+  @override
+  List<Object> get props => [];
+
+  const SendOrder();
+}
 
 
 class GetLast10Cart extends CartEvent {

@@ -35,4 +35,22 @@ class Cart_bloc
       );
     }
 
+    if (event is SendOrder) {
+      yield SendOrderLoading();
+      final failureOrData = await repository.sendOrder();
+
+      yield* failureOrData.fold(
+            (failure) async* {
+          log('yield is error');
+          yield SendOrderError(errorMessage: mapFailureToMessage(failure));
+        },
+            (data) async* {
+          log('yield is loaded');
+          yield SendOrderILoaded(
+            productModel: data,
+          );
+        },
+      );
+    }
+
   }}
