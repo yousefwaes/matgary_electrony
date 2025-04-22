@@ -27,7 +27,7 @@ class _CartPageState extends State<CartPage> {
   String valueInput = "";
   Widget CartWidget = Container();
   late ScreenUtil screenUtil;
-  
+
   // Controllers for customer information
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -72,7 +72,8 @@ class _CartPageState extends State<CartPage> {
     double total = 0.0;
     for (var product in products) {
       int quantity = quantities[product.id ?? 0] ?? 1;
-      total += (double.tryParse(product.price.toString() ?? '0') ?? 0) * quantity;
+      total +=
+          (double.tryParse(product.price.toString() ?? '0') ?? 0) * quantity;
     }
     return total;
   }
@@ -124,7 +125,9 @@ class _CartPageState extends State<CartPage> {
                       children: [
                         // Product List
                         Padding(
-                          padding: EdgeInsets.only(bottom: 90), // Increased padding to match new position
+                          padding: EdgeInsets.only(
+                              bottom:
+                                  90), // Increased padding to match new position
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: state.productModel.length,
@@ -159,28 +162,31 @@ class _CartPageState extends State<CartPage> {
                                     ],
                                   ),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       // أيقونة الحذف
                                       IconButton(
-                                        icon: Icon(Icons.delete, color: Colors.red),
+                                        icon: Icon(Icons.delete,
+                                            color: Colors.red),
                                         onPressed: () async {
                                           List<ProductModel> cartItems =
                                               await getCachedData(
-                                                key: "Cart",
-                                                retrievedDataType:
-                                                ProductModel.init(),
-                                                returnType: List,
-                                              ) ??
+                                                    key: "Cart",
+                                                    retrievedDataType:
+                                                        ProductModel.init(),
+                                                    returnType: List,
+                                                  ) ??
                                                   [];
 
                                           cartItems.removeWhere(
-                                                  (item) => item.id == product.id);
+                                              (item) => item.id == product.id);
                                           await cachedData(
                                             key: 'Cart',
                                             data: cartItems,
                                           );
-                                          BlocProvider.of<Cart_bloc>(context).add(Cart());
+                                          BlocProvider.of<Cart_bloc>(context)
+                                              .add(Cart());
                                         },
                                       ),
                                       SizedBox(width: 8),
@@ -188,7 +194,7 @@ class _CartPageState extends State<CartPage> {
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               product.name.toString(),
@@ -214,7 +220,7 @@ class _CartPageState extends State<CartPage> {
                                             SizedBox(height: 2),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 // السعر
                                                 Text(
@@ -230,7 +236,7 @@ class _CartPageState extends State<CartPage> {
                                             SizedBox(height: 2),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 // عداد الكمية (تم نقله إلى اليسار)
                                                 Container(
@@ -243,30 +249,41 @@ class _CartPageState extends State<CartPage> {
                                                         color: Colors.grey
                                                             .withOpacity(0.3)),
                                                     borderRadius:
-                                                    BorderRadius.circular(10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       IconButton(
                                                         icon: Icon(Icons.remove,
                                                             size: 18),
                                                         onPressed: () {
-                                                          if (quantities[product.id ?? 0]! > 1) {
+                                                          if (quantities[
+                                                                  product.id ??
+                                                                      0]! >
+                                                              1) {
                                                             setState(() {
-                                                              quantities[product.id ?? 0] = quantities[product.id ?? 0]! - 1;
+                                                              quantities[product
+                                                                      .id ??
+                                                                  0] = quantities[
+                                                                      product.id ??
+                                                                          0]! -
+                                                                  1;
                                                             });
                                                           }
                                                         },
                                                       ),
                                                       Text(
-                                                        quantities[product.id ?? 0].toString(),
+                                                        quantities[
+                                                                product.id ?? 0]
+                                                            .toString(),
                                                         style: TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
-                                                          FontWeight.bold,
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                       IconButton(
@@ -274,7 +291,12 @@ class _CartPageState extends State<CartPage> {
                                                             size: 18),
                                                         onPressed: () {
                                                           setState(() {
-                                                            quantities[product.id ?? 0] = quantities[product.id ?? 0]! + 1;
+                                                            quantities[product
+                                                                    .id ??
+                                                                0] = quantities[
+                                                                    product.id ??
+                                                                        0]! +
+                                                                1;
                                                           });
                                                         },
                                                       ),
@@ -290,7 +312,8 @@ class _CartPageState extends State<CartPage> {
                                                   ),
                                                 ),
                                                 Icon(Icons.star,
-                                                    color: Colors.amber, size: 18),
+                                                    color: Colors.amber,
+                                                    size: 18),
                                               ],
                                             ),
                                           ],
@@ -302,10 +325,12 @@ class _CartPageState extends State<CartPage> {
                                         height: 100,
                                         width: 100,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                                DataSourceURL.baseImage+product.image.toString()),
+                                                DataSourceURL.baseImage +
+                                                    product.image.toString()),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -317,7 +342,7 @@ class _CartPageState extends State<CartPage> {
                             },
                           ),
                         ),
-                        
+
                         // Fixed total at bottom
                         Positioned(
                           bottom: 20, // Changed from 0 to 20 to lift it up
@@ -337,17 +362,21 @@ class _CartPageState extends State<CartPage> {
                               ],
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Directionality(
-                                textDirection: TextDirection.rtl, 
+                                textDirection: TextDirection.rtl,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
                                         Text(
                                           "الإجمالي: ",
-                                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           "${calculateTotal(state.productModel).toStringAsFixed(2)} ريال",
@@ -361,12 +390,266 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
-                                        _showCheckoutConfirmation(context, calculateTotal(state.productModel));
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                elevation: 8,
+                                                insetPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 20,
+                                                        vertical: 24),
+                                                child: Container(
+                                                  width: double.maxFinite,
+                                                  constraints: BoxConstraints(
+                                                      maxWidth: 500),
+                                                  padding: EdgeInsets.all(20),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Container(
+                                                        width: double.infinity,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 15),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "تأكيد الطلب",
+                                                            style: TextStyle(
+                                                              fontSize: 22,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 24),
+                                                      InputField(
+                                                        controller:
+                                                            _nameController,
+                                                        labelText: "اسم العميل",
+                                                        prefixIcon:
+                                                            Icons.person,
+                                                      ),
+                                                      SizedBox(height: 16),
+                                                      InputField(
+                                                        controller:
+                                                            _phoneController,
+                                                        labelText: "رقم الهاتف",
+                                                        prefixIcon: Icons.phone,
+                                                        keyboardType:
+                                                            TextInputType.phone,
+                                                      ),
+                                                      SizedBox(height: 16),
+                                                      InputField(
+                                                        controller:
+                                                            _addressController,
+                                                        labelText: "العنوان",
+                                                        prefixIcon:
+                                                            Icons.location_on,
+                                                        maxLines: 3,
+                                                      ),
+                                                      SizedBox(height: 24),
+                                                      Container(
+                                                        padding:
+                                                            EdgeInsets.all(16),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Colors.grey[100],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(15),
+                                                          border: Border.all(
+                                                              color: Colors
+                                                                  .grey[300]!),
+                                                        ),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "تفاصيل الطلب",
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            Divider(
+                                                                thickness: 1.5),
+                                                            SizedBox(height: 8),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  "${calculateTotal(state.productModel).toStringAsFixed(2)} ريال",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color:
+                                                                        primaryColor,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  "المجموع:",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 24),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Expanded(
+                                                            child: TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              style: TextButton
+                                                                  .styleFrom(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            12),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  side: BorderSide(
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          400]!),
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                "إلغاء",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      800],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 16),
+                                                          Expanded(
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                // Process order here
+                                                                if (_nameController.text.isEmpty ||
+                                                                    _addressController
+                                                                        .text
+                                                                        .isEmpty ||
+                                                                    _phoneController
+                                                                        .text
+                                                                        .isEmpty) {
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(
+                                                                    SnackBar(
+                                                                        content:
+                                                                            Text("الرجاء إدخال جميع البيانات المطلوبة")),
+                                                                  );
+                                                                  return;
+                                                                }
+
+                                                                BlocProvider.of<Cart_bloc>(context).add(SendOrder());
+                                                                // Here you'd typically send the order to your backend
+
+
+                                                              },
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor:
+                                                                    primaryColor,
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            12),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                "تأكيد الطلب",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: primaryColor,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                       ),
                                       child: Text(
@@ -525,15 +808,17 @@ class _CartPageState extends State<CartPage> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Process order here
-                            if (_nameController.text.isEmpty || 
-                                _addressController.text.isEmpty || 
+                            if (_nameController.text.isEmpty ||
+                                _addressController.text.isEmpty ||
                                 _phoneController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("الرجاء إدخال جميع البيانات المطلوبة")),
+                                SnackBar(
+                                    content: Text(
+                                        "الرجاء إدخال جميع البيانات المطلوبة")),
                               );
                               return;
                             }
-                            
+
                             // Here you'd typically send the order to your backend
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("تم تأكيد الطلب بنجاح")),
@@ -570,10 +855,10 @@ class _CartPageState extends State<CartPage> {
 
   // Custom Input Field Widget
   Widget InputField({
-    required TextEditingController controller, 
-    required String labelText, 
+    required TextEditingController controller,
+    required String labelText,
     required IconData prefixIcon,
-    int maxLines = 1, 
+    int maxLines = 1,
     TextInputType keyboardType = TextInputType.text,
   }) {
     return Container(
