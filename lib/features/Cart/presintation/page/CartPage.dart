@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:matgary_electrony/features/Home/presintation/page/HomePage.dart';
 import '../../../../core/AppTheme.dart';
 import '../../../../core/common.dart';
 import '../../../../core/util/ScreenUtil.dart';
@@ -117,7 +118,17 @@ class _CartPageState extends State<CartPage> {
                 ],
               );
             }
+            if (state is SendOrderILoaded) {
+               cachedData(key: 'Cart', data: []);
+               cachedData(key: 'phoneNumber', data:_phoneController.text);
+               Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                     builder: (context) => HomePage(),
+                   ));
 
+
+            }
             if (state is CartILoaded) {
               return state.productModel.isEmpty
                   ? const Center(child: Text("السلة فارغة"))
@@ -568,7 +579,7 @@ class _CartPageState extends State<CartPage> {
                               );
                               return;
                             }else {
-                              print("fffffff");
+
                               // Use parentContext to access the BlocProvider
                               BlocProvider.of<Cart_bloc>(parentContext).add(
                                   SendOrder());
