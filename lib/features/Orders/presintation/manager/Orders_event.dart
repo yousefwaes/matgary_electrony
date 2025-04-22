@@ -1,4 +1,3 @@
-/*
 part of 'Orders_bloc.dart';
 
 abstract class ProductEvent extends Equatable {
@@ -17,4 +16,4 @@ final String id;
 class GetLast10Product extends ProductEvent {
   @override
   List<Object> get props => [];
-}*/
+}

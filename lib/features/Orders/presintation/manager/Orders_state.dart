@@ -1,4 +1,3 @@
-/*
 part of 'Orders_bloc.dart';
 
 abstract class OrdersState extends Equatable {
@@ -32,4 +31,3 @@ class OrdersError extends OrdersState {
   @override
   List<Object> get props => [];
 }
-*/
