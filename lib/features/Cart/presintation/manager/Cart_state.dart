@@ -45,7 +45,7 @@ class SendOrderLoading extends CartState {
 }
 
 class SendOrderILoaded extends CartState {
-  List<ProductModel> productModel;
+  SendOrderModel productModel;
 
   SendOrderILoaded({required this.productModel});
 

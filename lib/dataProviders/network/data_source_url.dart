@@ -14,7 +14,7 @@ class DataSourceURL {
 
   // static String getAllProducts = 'brand/detail';
   static String getAllCategories = 'category';
-  static String sendOrder = 'category';
+  static String sendOrder = 'orders';
   static String barcodeCheck = 'form';
   static String CountryBoycott = 'country_status';
   static String getAllCountrys = 'country';

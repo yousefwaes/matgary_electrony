@@ -7,6 +7,7 @@ import 'package:matgary_electrony/dataProviders/remote_data_provider.dart';
 import 'package:matgary_electrony/dataProviders/repository.dart';
 
 import '../../../Product/data/model/ProductModel.dart';
+import '../model/SendOrderModel.dart';
 
 class CartRepository extends Repository {
   final RemoteDataProvider remoteDataProvider; //get the data from the internet
@@ -37,9 +38,8 @@ class CartRepository extends Repository {
   Future<Either<Failure, dynamic>> sendOrder() async {
     return await sendRequest(
       checkConnection: networkInfo.isConnected,
-      remoteFunction: () async {
-
-        List<ProductModel> remoteData = await remoteDataProvider.sendJsonData(
+      remoteFunction: () async {;
+        SendOrderModel remoteData = await remoteDataProvider.sendJsonData(
           url: DataSourceURL.sendOrder,
           jsonData:{
             "customerName":    "أحمد علي",
@@ -52,8 +52,8 @@ class CartRepository extends Repository {
             ]
 
           } ,
-          returnType: List,
-          retrievedDataType: ProductModel.init(),
+          returnType: SendOrderModel.init(),
+          retrievedDataType: SendOrderModel.init(),
         );
         print(remoteData);
         return remoteData;

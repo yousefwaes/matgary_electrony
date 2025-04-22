@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:matgary_electrony/dataProviders/error/failures.dart';
 import '../../../Product/data/model/ProductModel.dart';
+import '../../data/model/SendOrderModel.dart';
 import '../../data/repository/CartRepository.dart';
 
 
