@@ -1,19 +1,19 @@
 part of 'Orders_bloc.dart';
 
-abstract class ProductEvent extends Equatable {
-  const ProductEvent();
+abstract class OrdersEvent extends Equatable {
+  const OrdersEvent();
 }
 
-class GetAllProduct extends ProductEvent {
+class GetAllOrders extends OrdersEvent {
 final String id;
   @override
   List<Object> get props => [];
 
-  const GetAllProduct({required this.id});
+  const GetAllOrders({required this.id});
 }
 
 
-class GetLast10Product extends ProductEvent {
+class GetLast10Orders extends OrdersEvent {
   @override
   List<Object> get props => [];
 }

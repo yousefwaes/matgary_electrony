@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:matgary_electrony/dataProviders/error/failures.dart';
+import '../../data/model/OrderModel.dart';
 import '../../data/repository/OrdersRepository.dart';
 
 
@@ -28,7 +29,7 @@ class Orders_bloc
             (data) async* {
           log('yield is loaded');
           yield OrdersILoaded(
-            OrdersModel: data,
+            ordersModel: data,
           );
         },
       );

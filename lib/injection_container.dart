@@ -1,4 +1,3 @@
-
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:matgary_electrony/features/Home/presintation/manager/Home_bloc.dart';
@@ -16,6 +15,8 @@ import 'features/Cart/presintation/manager/Cart_bloc.dart';
 import 'features/Favorite/data/repository/FavoriteRepository.dart';
 import 'features/Favorite/presintation/manager/Favorite_bloc.dart';
 import 'features/Home/data/repository/HomeRepository.dart';
+import 'features/Orders/data/repository/OrdersRepository.dart';
+import 'features/Orders/presintation/manager/Orders_bloc.dart';
 import 'features/ProductDeatils/data/repository/ProductDeatilsRepository.dart';
 import 'features/ProductDeatils/presintation/manager/ProductDeatils_bloc.dart';
 
@@ -79,8 +80,9 @@ Future<void> init() async {
   _initProductDeatils_blocFeature();
   _initHome_blocFeature();
   _initFavorite_blocFeature();
-
   _initCart_blocFeature();
+  _initOrder_blocFeature();
+
   ///service provider
 
   //! Core
@@ -195,6 +197,20 @@ void _initCart_blocFeature() {
   //repositories
   sl.registerLazySingleton<CartRepository>(
         () => CartRepository(
+      remoteDataProvider: sl(),
+      localDataProvider: sl(),
+      networkInfo: sl(),
+    ),
+  );
+}
+
+void _initOrder_blocFeature() {
+//bloc
+  sl.registerFactory(() => Orders_bloc(repository: sl()));
+
+  //repositories
+  sl.registerLazySingleton<OrdersRepository>(
+    () => OrdersRepository(
       remoteDataProvider: sl(),
       localDataProvider: sl(),
       networkInfo: sl(),

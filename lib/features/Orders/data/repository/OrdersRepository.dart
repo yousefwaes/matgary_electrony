@@ -5,7 +5,9 @@ import 'package:matgary_electrony/dataProviders/network/Network_info.dart';
 import 'package:matgary_electrony/dataProviders/network/data_source_url.dart';
 import 'package:matgary_electrony/dataProviders/remote_data_provider.dart';
 import 'package:matgary_electrony/dataProviders/repository.dart';
-import 'package:matgary_electrony/features/Orders/data/model/OrdersModel.dart';
+
+import '../model/OrderModel.dart';
+
 
 class OrdersRepository extends Repository {
   final RemoteDataProvider remoteDataProvider; //get the data from the internet
@@ -21,10 +23,10 @@ class OrdersRepository extends Repository {
     return await sendRequest(
       checkConnection: networkInfo.isConnected,
       remoteFunction: () async {
-        List<OrdersModel> remoteData = await remoteDataProvider.getData(
-          url: 'categories/$id/Orderss',
+        List<OrderModel> remoteData = await remoteDataProvider.getData(
+          url: DataSourceURL.orders,
           returnType: List,
-          retrievedDataType: OrdersModel.init(),
+          retrievedDataType: OrderModel.init(),
         );
         return remoteData;
       },

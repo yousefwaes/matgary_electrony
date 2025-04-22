@@ -15,7 +15,7 @@ class OrdersLoading extends OrdersState {
 }
 
 class OrdersILoaded extends OrdersState {
-  List<OrdersModel> ordersModel;
+  List<OrderModel> ordersModel;
 
   OrdersILoaded({required this.ordersModel});
 
