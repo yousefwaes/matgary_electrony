@@ -31,7 +31,7 @@ class _BottomnavigationState extends State<Bottomnavigation> {
         Navigator.pushReplacementNamed(context, '/cart');
         break;
       case _SelectedTab.reports:
-        Navigator.pushReplacementNamed(context, '/reports');
+        Navigator.pushReplacementNamed(context, '/orders');
         break;
       // TODO: Handle this case.
 

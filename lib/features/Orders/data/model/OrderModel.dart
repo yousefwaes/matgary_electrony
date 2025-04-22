@@ -1,13 +1,6 @@
 class OrderModel {
-  final int id;
-  final String customerName;
-  final String customerAddress;
-  final String customerPhone;
-  final String status;
-  final double total;
-  final String createdAt;
-  final String updatedAt;
-  final List<OrderItemModel> items;
+  dynamic id, customerName, customerAddress, customerPhone, status, total, createdAt, updatedAt;
+  List<OrderItemModel> items;
 
   OrderModel({
     required this.id,
@@ -35,11 +28,15 @@ class OrderModel {
       customerAddress: json['customerAddress'],
       customerPhone: json['customerPhone'],
       status: json['status'],
-      total: json['total'].toDouble(),
+      total: json['total'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       items: orderItems,
     );
+  }
+
+  OrderModel fromJson(Map<String, dynamic> json) {
+    return OrderModel.fromJson(json);
   }
 
   factory OrderModel.init() {
@@ -56,6 +53,14 @@ class OrderModel {
     );
   }
 
+  fromJsonList(List<dynamic> jsonList) {
+    List<OrderModel> data = [];
+    for (var order in jsonList) {
+      data.add(OrderModel.fromJson(order));
+    }
+    return data;
+  }
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'customerName': customerName,
@@ -67,23 +72,11 @@ class OrderModel {
         'updatedAt': updatedAt,
         'items': items.map((item) => item.toJson()).toList(),
       };
-
-  static List<OrderModel> fromJsonList(List<dynamic> jsonList) {
-    List<OrderModel> data = [];
-    for (var order in jsonList) {
-      data.add(OrderModel.fromJson(order));
-    }
-    return data;
-  }
 }
 
 class OrderItemModel {
-  final int id;
-  final int quantity;
-  final double price;
-  final int orderId;
-  final int productId;
-  final ProductItemModel product;
+  dynamic id, quantity, price, orderId, productId;
+  ProductItemModel product;
 
   OrderItemModel({
     required this.id,
@@ -98,7 +91,7 @@ class OrderItemModel {
     return OrderItemModel(
       id: json['id'],
       quantity: json['quantity'],
-      price: json['price'].toDouble(),
+      price: json['price'],
       orderId: json['orderId'],
       productId: json['productId'],
       product: ProductItemModel.fromJson(json['product']),
@@ -116,16 +109,7 @@ class OrderItemModel {
 }
 
 class ProductItemModel {
-  final int id;
-  final String name;
-  final double price;
-  final double oldPrice;
-  final String image;
-  final String status;
-  final dynamic rating;
-  final int categoryId;
-  final String createdAt;
-  final String updatedAt;
+  dynamic id, name, price, oldPrice, image, status, rating, categoryId, createdAt, updatedAt;
 
   ProductItemModel({
     required this.id,
@@ -144,8 +128,8 @@ class ProductItemModel {
     return ProductItemModel(
       id: json['id'],
       name: json['name'],
-      price: json['price'].toDouble(),
-      oldPrice: json['oldPrice'].toDouble(),
+      price: json['price'],
+      oldPrice: json['oldPrice'],
       image: json['image'],
       status: json['status'],
       rating: json['rating'],
