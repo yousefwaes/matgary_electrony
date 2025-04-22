@@ -24,7 +24,7 @@ class OrdersRepository extends Repository {
       checkConnection: networkInfo.isConnected,
       remoteFunction: () async {
         List<OrderModel> remoteData = await remoteDataProvider.getData(
-          url: DataSourceURL.orders+"/phone/0512345678",
+          url: DataSourceURL.orders+id,
           returnType: List,
           retrievedDataType: OrderModel.init(),
         );
