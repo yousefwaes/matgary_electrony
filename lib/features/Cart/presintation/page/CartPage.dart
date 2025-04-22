@@ -119,8 +119,77 @@ class _CartPageState extends State<CartPage> {
             if (state is SendOrderILoaded) {
                cachedData(key: 'Cart', data: []);
                cachedData(key: 'phoneNumber', data:_phoneController.text);
+               
+               // Schedule dialog to show after build is complete
+               WidgetsBinding.instance.addPostFrameCallback((_) {
+                 showDialog(
+                   context: context,
+                   barrierDismissible: false,
+                   builder: (BuildContext successContext) {
+                     // Auto-dismiss after 5 seconds
+                     Future.delayed(Duration(seconds: 5), () {
+                       Navigator.of(successContext).pop();
+                     });
+                     
+                     return Dialog(
+                       shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(20),
+                       ),
+                       elevation: 10,
+                       child: Container(
+                         padding: EdgeInsets.all(20),
+                         decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(20),
+                           gradient: LinearGradient(
+                             begin: Alignment.topRight,
+                             end: Alignment.bottomLeft,
+                             colors: [
+                               primaryColor.withOpacity(0.9),
+                               primaryColor,
+                             ],
+                           ),
+                         ),
+                         child: Column(
+                           mainAxisSize: MainAxisSize.min,
+                           children: [
+                             Container(
+                               padding: EdgeInsets.all(15),
+                               decoration: BoxDecoration(
+                                 shape: BoxShape.circle,
+                                 color: Colors.white,
+                               ),
+                               child: Icon(
+                                 Icons.check_circle_outline,
+                                 color: primaryColor,
+                                 size: 60,
+                               ),
+                             ),
+                             SizedBox(height: 20),
+                             Text(
+                               "تم تأكيد الطلب بنجاح",
+                               style: TextStyle(
+                                 fontSize: 22,
+                                 fontWeight: FontWeight.bold,
+                                 color: Colors.white,
+                               ),
+                             ),
+                             SizedBox(height: 10),
+                             Text(
+                               "سيتم التواصل معك قريباً",
+                               style: TextStyle(
+                                 fontSize: 16,
+                                 color: Colors.white.withOpacity(0.9),
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     );
+                   },
+                 );
+               });
+               
                BlocProvider.of<Cart_bloc>(context).add(Cart());
-
             }
             if (state is CartILoaded) {
               return state.productModel.isEmpty
@@ -598,9 +667,7 @@ class _CartPageState extends State<CartPage> {
                             );
                             
                             // Here you'd typically send the order to your backend
-                            ScaffoldMessenger.of(dialogContext).showSnackBar(
-                              SnackBar(content: Text("تم تأكيد الطلب بنجاح")),
-                            );
+                            // Show a beautiful success dialog instead of SnackBar
                             Navigator.of(dialogContext).pop();
                           },
                           style: ElevatedButton.styleFrom(
